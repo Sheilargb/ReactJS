@@ -1,7 +1,9 @@
+import Encabezado from "./Encabezado";
 function App(){
   
   return (
     <div>
+    <Encabezado />
     <h1>5A EVND</h1>
     <h2>Alumn@:</h2>
     <h3>Sheila Yuridia Cruz Badillo</h3>
@@ -28,22 +30,20 @@ function ProfileComponent(){
   ]
   return (
     <>
+    <h1 className="text-lowercase">Profile Component</h1>
       <p>Lista de usuarios del sistema</p>
-      <u1>
+      <ul>
         {
-        users.map(function(user){
-          return (
-            <li>{user.name} es un {user.role}</li>
-          )
+        users.map(function(user, index){
+          return <li key={index}>{user.name} es un {user.role}</li>
        })
        }
-    </u1>
+    </ul>
   </>
   )
 }
 
 function FeedComponent(){
-  /*return <h1 className="text-lowercase">Feed Component</h1>*/
   const materiales = [
   {id: 1, material:'Arena',role: 'concreto y morteros.'},
   {id: 1, material:'Cemento',role: 'concreto y mortero'},
@@ -52,16 +52,15 @@ function FeedComponent(){
   ]
   return (
     <>
+    <h1 className="text-lowercase">Feed Component</h1>
       <p>Lista de materiales para construccion</p>
-      <u1>
+      <ul>
         {
-        materiales.map(function(elemento){
-          return (
-            <li>{elemento.material} es para {elemento.role}</li>
-          )
+        materiales.map(function(elemento, index){
+          return <li key={index}>{elemento.material} es para {elemento.role}</li>
        })
        }
-    </u1>
+    </ul>
   </>
   )
 }
