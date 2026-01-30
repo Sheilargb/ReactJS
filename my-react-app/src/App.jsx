@@ -1,9 +1,11 @@
 import Encabezado from "./Encabezado";
+
 function App(){
   
   return (
     <div>
     <Encabezado />
+   <ContenedorTarjetas />
     <h1>5A EVND</h1>
     <h2>Alumn@:</h2>
     <h3>Sheila Yuridia Cruz Badillo</h3>

@@ -1,4 +1,4 @@
-import miLogo from "./assets/photoshop.png";
+import miLogo from "./assets/batman.png";
 import Facebook from "./assets/facebook.png";
 import Instagram from "./assets/social.png";
 import TikTok from "./assets/tik-tok.png";
@@ -11,14 +11,14 @@ function Encabezado() {
             <Logo />
             <Menu />
             <Redes />
-            <h2>Bienvenido a mi sitio</h2>
+
         </div>
     );
 }
 
 function Logo(){
     return (
-         <div className="Logo">
+         <div className="logoDiv">
             <img src={miLogo} alt="React Logo" />
         </div>
     )
@@ -26,31 +26,30 @@ function Logo(){
 
 function Menu(){
     return (
-        <nav>
+        <div className="menuDiv">
             <ul>
-                <li>Inicio</li>
-                <li>Acerca de</li>
-                <li>Productos</li>
-                <li>Contacto</li>
-                <li>Sucursales</li>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Acerca de</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Contacto</a></li>
+                <li><a href="#">Sucursales</a></li>
+
             </ul>
-        </nav>
+        </div>
     );
 }
 
 function Redes() {
     return(
-        <div>
-            <h2>Redes Sociales</h2>
+        <div className="redesDiv">
             <ul>
-                <li><img src={Facebook} alt="Facebook" width="50" /></li>
-                <li><img src={Instagram} alt="Instagram" width="50" /></li>
-                <li><img src={TikTok} alt="TikTok" width="50" /></li>
-                <li><img src={WhatsApp} alt="WhatsApp" width="50" /></li>
+                <li><a href="#"><img src={Facebook} alt="Facebook" width="50" /></a></li>
+                <li><a href="#"><img src={Instagram} alt="Instagram" width="50" /></a></li>
+                <li><a href="#"><img src={TikTok} alt="TikTok" width="50" /></a></li>
+                <li><a href="#"><img src={WhatsApp} alt="WhatsApp" width="50" /></a></li>
             </ul>
         </div>
-         
       )
-
 }
+
 export default Encabezado;
