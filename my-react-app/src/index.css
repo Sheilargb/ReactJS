@@ -1,6 +1,21 @@
+html, body, #root {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  padding:0;
+  padding: 0;
+}
+
+/* Layout: make app fill viewport and push footer down */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
 }
 
 

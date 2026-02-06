@@ -1,4 +1,3 @@
-import Tarjeta from "./Tarjeta";
 import "./Cards.css";
 
 /* imágenes */
@@ -9,34 +8,43 @@ import python from "./assets/python.jpg";
 
 function Cards() {
   return (
-    <div className="contenedorTarjetas">
+    <div className="cardsContainer">
 
-      <Tarjeta
-        imagen={html}
+      <TarjetaComponent
         titulo="HTML"
         descripcion="Estructura básica de páginas web."
+        imagen={html}
       />
 
-      <Tarjeta
-        imagen={java}
+      <TarjetaComponent
         titulo="Java"
         descripcion="Lenguaje orientado a objetos muy popular."
+         imagen={java}
       />
 
-      <Tarjeta
-        imagen={jsx}
+      <TarjetaComponent
         titulo="React JSX"
         descripcion="Sintaxis moderna para interfaces dinámicas."
+         imagen={jsx}
       />
 
-      <Tarjeta
-        imagen={python}
+      <TarjetaComponent
         titulo="Python"
         descripcion="Lenguaje sencillo y poderoso."
+         imagen={python}
       />
-
     </div>
   );
 }
 
+function TarjetaComponent(props) {
+  return (
+    <div className='card'>
+      <img src={props.imagen} alt="Logotipo" />
+      <h3>{props.titulo}</h3>
+      <p>{props.descripcion}</p>
+      <a href="#">Ver más</a>
+    </div>
+  );
+}
 export default Cards;

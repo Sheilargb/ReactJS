@@ -1,26 +1,64 @@
-.cardsContainer{
-  display:flex;
-  gap:20px;
-  padding:40px;
-  justify-content:center;
-  flex-wrap:wrap;
-  background:#f2f5f7;
+.cardsContainer {
+  display: flex;
+  gap: 30px;
+  padding: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #f2f5f7;
 }
 
-.card{
-  width:220px;
-  background:white;
-  border-radius:10px;
-  padding:15px;
-  text-align:center;
-  box-shadow:0 5px 10px rgba(0,0,0,.2);
-  transition:.3s;
+/* Tarjeta */
+.card {
+  width: 240px;
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover{
-  transform:translateY(-8px);
+/* Hover */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
-.card img{
-  width:100%;
+/* Imagen */
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Título */
+.card h3 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+/* Descripción */
+.card p {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Enlace */
+.card a {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  color: inherit; /* respeta tu paleta */
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+/* Hover del enlace */
+.card a:hover {
+  background: rgba(0, 0, 0, 0.08);
 }

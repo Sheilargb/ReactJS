@@ -7,13 +7,16 @@ import "./index.css";
 
 function App() {
   return (
-  <>
-  <Encabezado />
-  <Cards />
-  <Parallax />
-  <Footer />
-  </>
+    <div className="app">
+      <main className="content">
+        <Encabezado />
+        <Cards />
+        <Parallax />
+      </main>
+      <Footer />
+    </div>
   );
 }
+
 export default App;
 
