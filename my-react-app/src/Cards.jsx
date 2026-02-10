@@ -1,37 +1,54 @@
+import AcercaDe from './AcercaDe';
 import "./Cards.css";
+import Productos from './Productos';
+import Contacto from './Contacto';
+import Sucursales from './Sucursales';
+import Galeria from './Galeria';
 
-/* imágenes */
-import html from "./assets/html.jpg";
-import java from "./assets/java.jpg";
-import jsx from "./assets/react.jpg";
-import python from "./assets/python.jpg";
+import PropTypes from 'prop-types';
 
-function Cards() {
+function Cards({vista}) {
+  const vistas = {
+    "Inicio": <Inicio/>,
+    "AcercaDe": <AcercaDe/>,
+    "Productos": <Productos/>,
+    "Contacto": <Contacto/>,
+    "Sucursales": <Sucursales/>,
+    "Galeria": <Galeria/>,
+  }
+  return (
+    <div className='contenedorDiv'>
+      {vistas[vista] || <Inicio/>}
+    </div>
+  );
+}
+
+function Inicio() {
   return (
     <div className="cardsContainer">
 
       <TarjetaComponent
         titulo="HTML"
         descripcion="Estructura básica de páginas web."
-        imagen={html}
+        imagen="http://localhost:5173/src/assets/html.jpg"
       />
 
       <TarjetaComponent
         titulo="Java"
         descripcion="Lenguaje orientado a objetos muy popular."
-         imagen={java}
+         imagen="http://localhost:5173/src/assets/java.jpg"
       />
 
       <TarjetaComponent
         titulo="React JSX"
         descripcion="Sintaxis moderna para interfaces dinámicas."
-         imagen={jsx}
+         imagen="http://localhost:5173/src/assets/react.jpg"
       />
 
       <TarjetaComponent
         titulo="Python"
         descripcion="Lenguaje sencillo y poderoso."
-         imagen={python}
+         imagen="http://localhost:5173/src/assets/python.jpg"
       />
     </div>
   );
@@ -47,4 +64,9 @@ function TarjetaComponent(props) {
     </div>
   );
 }
+
+Cards.propTypes = {
+  vista: PropTypes.string.isRequired
+};
+
 export default Cards;
