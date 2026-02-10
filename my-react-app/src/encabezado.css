@@ -31,19 +31,33 @@
   padding:0;
 }
 
-.menuDiv a{
-  color:white;
-  text-decoration:none;
+/* Asegurar que los items del menú (li) reciban los estilos aunque no sean <a> */
+.menuDiv li{
+  color: #ffffff;
   padding:10px 18px;
   border-radius:8px;
   transition:all .3s ease;
+  cursor:pointer;
 }
 
-/* Hover iluminado moderno */
-.menuDiv a:hover{
+/* Hover iluminado moderno para li */
+.menuDiv li:hover{
   background:#00bcd4;
   box-shadow:0 0 12px #00bcd4;
   transform:scale(1.05);
+}
+
+/* Asegurar que los <a> dentro del menú hereden color blanco y no muestren enlace morado */
+.menuDiv a,
+.menuDiv a:link,
+.menuDiv a:visited{
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.menuDiv a:hover{
+  color: #ffffff;
 }
 
 
@@ -53,10 +67,21 @@
   align-items:center;
 }
 
+/* Hacer la lista de redes horizontal y sin viñetas */
+.redesDiv ul{
+  display:flex;
+  list-style:none;
+  gap:8px;
+  margin:0;
+  padding:0;
+  align-items:center;
+}
+
 .redesDiv img{
-  width:30px;
-  margin-left:10px;
+  width:28px;
+  margin:0;
   transition:transform .25s ease;
+  display:block;
 }
 
 .redesDiv img:hover{

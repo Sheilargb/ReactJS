@@ -31,12 +31,12 @@ function Menu({cambiarVista}) {
         <nav className="menuDiv">
     
             <ul>
-                <li onClick={() => cambiarVista("Inicio")}>Inicio</li>
-                <li onClick={() => cambiarVista("AcercaDe")}>Acerca de</li>
-                <li onClick={() => cambiarVista("Productos")}>Productos</li>
-                <li onClick={() => cambiarVista("Contacto")}>Contacto</li>
-                <li onClick={() => cambiarVista("Sucursales")}>Sucursales</li>
-                <li onClick={() => cambiarVista("Galeria")}>Galeria</li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Inicio"); }}>Inicio</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("AcercaDe"); }}>Acerca de</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Productos"); }}>Productos</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Contacto"); }}>Contacto</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Sucursales"); }}>Sucursales</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Galeria"); }}>Galeria</a></li>
             </ul>
         </nav>
     );
