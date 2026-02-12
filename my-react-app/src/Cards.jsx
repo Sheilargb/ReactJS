@@ -30,13 +30,13 @@ function Inicio() {
       <TarjetaComponent
         titulo="HTML"
         descripcion="Estructura básica de páginas web."
-        imagen="http://localhost:5173/src/assets/html.jpg"
+        imagen="https://www.oxfordwebstudio.com/user/pages/06.da-li-znate/sta-je-html/sta-je-html.jpg"
       />
 
       <TarjetaComponent
         titulo="Java"
         descripcion="Lenguaje orientado a objetos muy popular."
-         imagen="http://localhost:5173/src/assets/java.jpg"
+         imagen="https://cloudmatetechnologies.com/wp-content/uploads/2024/06/react.js.png"
       />
 
       <TarjetaComponent
@@ -48,7 +48,7 @@ function Inicio() {
       <TarjetaComponent
         titulo="Python"
         descripcion="Lenguaje sencillo y poderoso."
-         imagen="http://localhost:5173/src/assets/python.jpg"
+         imagen="https://miro.medium.com/v2/resize:fit:1400/0*9AD8S7C3EVigtxSG"
       />
     </div>
   );
