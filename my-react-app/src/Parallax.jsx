@@ -1,4 +1,4 @@
-import Mapa from './Mapa';
+﻿import Mapa from './Mapa';
 import "./parallax.css";
 
 function Parallax({ imageUrl }) {

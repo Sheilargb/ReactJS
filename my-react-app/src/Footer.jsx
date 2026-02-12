@@ -1,4 +1,4 @@
-import "./footer.css";
+﻿import "./footer.css";
 
 function Footer(){
   return(
@@ -10,4 +10,3 @@ function Footer(){
 }
 
 export default Footer;
-

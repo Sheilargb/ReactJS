@@ -6,7 +6,7 @@ const containerStyle = {
 };
 
 function Mapa({ lat, lng, nombre_sucursal }) {
-    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.API_KEY;
 
     if (!apiKey) {
         return (
