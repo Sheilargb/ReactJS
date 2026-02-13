@@ -1,5 +1,5 @@
 .parallax{
-  height:300px;
+  min-height: 600px;
   background-attachment:fixed;
   background-size:cover;
   background-position:center;
@@ -8,4 +8,50 @@
   justify-content:center;
   color:white;
   font-size:30px;
+  padding: 48px 16px;
+  position: relative;
+}
+
+.parallax::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.parallax-content{
+  position: relative;
+  z-index: 1;
+  width: min(980px, 100%);
+  text-align: center;
+}
+
+.parallax-content h2{
+  margin: 0 0 8px;
+}
+
+.parallax-content p{
+  margin: 0 0 20px;
+  font-size: 18px;
+}
+
+.parallax-content .google-map{
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+.parallax-content .google-map .gm-style img{
+  max-width: none;
+}
+
+@media (max-width: 768px){
+  .parallax{
+    min-height: 520px;
+    padding: 36px 12px;
+  }
+
+  .parallax-content p{
+    font-size: 16px;
+  }
 }

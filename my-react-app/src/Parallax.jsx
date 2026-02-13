@@ -1,4 +1,4 @@
-﻿import Mapa from './Mapa';
+﻿import MapaGeolocalizacion from "./MapaGeolocalizacion";
 import "./parallax.css";
 
 function Parallax({ imageUrl }) {
@@ -8,12 +8,14 @@ function Parallax({ imageUrl }) {
 
   return (
     <div
-      className="parallax-container"
+      className="parallax"
       style={{ backgroundImage: `url(${background})` }}
     >
-      <h2>Promociones</h2>
-      <p>¡Descubre nuestras últimas promociones!</p>
-      <Mapa lat={20.238307064269975} lng={-97.95604634730972} nombre_sucursal="Sucursal Principal" />
+      <div className="parallax-content">
+        <h2>Promociones</h2>
+        <p>¡Descubre nuestras últimas promociones!</p>
+        <MapaGeolocalizacion />
+      </div>
     </div>
   );
 }
