@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
-import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api';
+import { useEffect, useRef, useState } from 'react';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
   height: '350px',
 };
 
+const libraries = ['marker'];
+
 function MapaGeolocalizacion() {
   const [ubicacion, setUbicacion] = useState(null);
   const [errorUbicacion, setErrorUbicacion] = useState('');
+  const [mapa, setMapa] = useState(null);
+  const marcadorRef = useRef(null);
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.API_KEY;
+
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script-parallax',
     googleMapsApiKey: apiKey || '',
+    libraries,
   });
 
   useEffect(() => {
@@ -35,6 +41,28 @@ function MapaGeolocalizacion() {
       { enableHighAccuracy: true, timeout: 10000 }
     );
   }, []);
+
+  useEffect(() => {
+    if (!isLoaded || !mapa || !ubicacion || !window.google?.maps?.marker?.AdvancedMarkerElement) {
+      return;
+    }
+
+    if (marcadorRef.current) {
+      marcadorRef.current.map = null;
+    }
+
+    marcadorRef.current = new window.google.maps.marker.AdvancedMarkerElement({
+      map: mapa,
+      position: ubicacion,
+      title: 'Tu ubicacion',
+    });
+
+    return () => {
+      if (marcadorRef.current) {
+        marcadorRef.current.map = null;
+      }
+    };
+  }, [isLoaded, mapa, ubicacion]);
 
   if (!apiKey) {
     return (
@@ -59,14 +87,14 @@ function MapaGeolocalizacion() {
       )}
       {!isLoaded && <p style={{ margin: 0, fontSize: 14 }}>Cargando mapa...</p>}
       {isLoaded && ubicacion ? (
-        <GoogleMap mapContainerStyle={containerStyle} center={ubicacion} zoom={16}>
-          <MarkerF
-            key={`${ubicacion.lat}-${ubicacion.lng}`}
-            position={ubicacion}
-            title="Tu ubicacion"
-            zIndex={999}
-          />
-        </GoogleMap>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={ubicacion}
+          zoom={16}
+          onLoad={(mapInstance) => setMapa(mapInstance)}
+          onUnmount={() => setMapa(null)}
+          options={{ mapId: 'DEMO_MAP_ID' }}
+        />
       ) : null}
       {isLoaded && !ubicacion && (
         <p style={{ margin: 0, fontSize: 14 }}>Obteniendo ubicacion...</p>
