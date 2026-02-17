@@ -14,6 +14,7 @@ function Mapa({ lat, lng, nombre_sucursal }) {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.API_KEY;
 
   const { isLoaded, loadError } = useJsApiLoader({
+    id: 'google-map-script',
     googleMapsApiKey: apiKey || '',
     libraries,
   });
@@ -69,3 +70,4 @@ function Mapa({ lat, lng, nombre_sucursal }) {
 }
 
 export default Mapa;
+

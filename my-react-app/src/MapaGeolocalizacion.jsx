@@ -16,7 +16,7 @@ function MapaGeolocalizacion() {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.API_KEY;
 
   const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script-parallax',
+    id: 'google-map-script',
     googleMapsApiKey: apiKey || '',
     libraries,
   });
@@ -104,3 +104,4 @@ function MapaGeolocalizacion() {
 }
 
 export default MapaGeolocalizacion;
+

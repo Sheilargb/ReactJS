@@ -5,6 +5,7 @@ import TikTok from "./assets/tik-tok.png";
 import WhatsApp from "./assets/whatsapp.png";
 import "./encabezado.css";
 import PropTypes from 'prop-types';
+import Clima from "./clima";
 
 function Encabezado({cambiarVista}) {
  return (
@@ -51,6 +52,7 @@ function Redes() {
                     <li><a href='#'><img src={TikTok} alt="TikTok" /></a></li>
                     <li><a href='#'><img src={WhatsApp} alt="WhatsApp" /></a></li>
             </ul>
+            <Clima/>
         </div>
     );
 }
