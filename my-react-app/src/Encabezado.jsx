@@ -34,7 +34,9 @@ function Menu({cambiarVista}) {
             <ul>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Inicio"); }}>Inicio</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("AcercaDe"); }}>Acerca de</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Usuarios"); }}>Usuarios</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Productos"); }}>Productos</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Carrito"); }}>Carrito</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Galeria"); }}>Galeria</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Sucursales"); }}>Sucursales</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Contacto"); }}>Contacto</a></li>

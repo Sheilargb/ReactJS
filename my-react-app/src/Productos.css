@@ -1,11 +1,11 @@
 :root{
-  --prod-fondo: #f7fafc;
+  --prod-fondo: #f7fbff;
   --prod-panel: #ffffff;
   --prod-acento: #2563eb;
   --prod-acento-suave: #38bdf8;
   --prod-texto: #0f172a;
   --prod-texto-suave: #475569;
-  --prod-borde: #e2e8f0;
+  --prod-borde: #dbe7f7;
 }
 
 .productos{
@@ -14,7 +14,7 @@
   background:
     radial-gradient(800px 300px at 15% 0%, rgba(56,189,248,0.18), transparent 60%),
     radial-gradient(700px 300px at 90% 10%, rgba(37,99,235,0.15), transparent 60%),
-    linear-gradient(180deg, #f7fafc 0%, #eef2f7 100%);
+    linear-gradient(180deg, #f7fbff 0%, #edf4ff 100%);
 }
 
 .productos-hero{
@@ -151,14 +151,14 @@
 /* Estilos para la estructura actual de Productos.jsx */
 .productosDiv {
   --surface: #ffffff;
-  --surface-soft: #f6f8fc;
+  --surface-soft: #f5f9ff;
   --text-main: #162030;
   --text-muted: #5e6b7d;
-  --line: #d8e0ed;
-  --accent: #c59b5c;
-  --accent-strong: #a98045;
-  --shadow: 0 14px 30px rgba(18, 29, 44, 0.12);
-  --shadow-hover: 0 22px 36px rgba(18, 29, 44, 0.18);
+  --line: #d9e6f8;
+  --accent: #2563eb;
+  --accent-strong: #1d4ed8;
+  --shadow: 0 14px 30px rgba(37, 99, 235, 0.12);
+  --shadow-hover: 0 22px 36px rgba(37, 99, 235, 0.18);
 
   padding: 64px 30px;
   max-width: 1320px;
@@ -167,12 +167,12 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 24px;
   background:
-    radial-gradient(860px 300px at 8% -8%, rgba(197, 155, 92, 0.16), transparent 60%),
-    radial-gradient(920px 360px at 100% -12%, rgba(94, 123, 158, 0.12), transparent 60%),
-    linear-gradient(180deg, #f8fbff 0%, #edf3fa 100%);
-  border: 1px solid #d9e2ef;
+    radial-gradient(860px 300px at 8% -8%, rgba(56, 189, 248, 0.16), transparent 60%),
+    radial-gradient(920px 360px at 100% -12%, rgba(37, 99, 235, 0.12), transparent 60%),
+    linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%);
+  border: 1px solid #d9e6f8;
   border-radius: 20px;
-  box-shadow: 0 14px 34px rgba(18, 29, 44, 0.1);
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.1);
 }
 
 .productosDiv h1 {
@@ -201,7 +201,7 @@
 .productosDiv > div:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
-  border-color: rgba(197, 155, 92, 0.55);
+  border-color: rgba(37, 99, 235, 0.55);
 }
 
 .productosDiv > div p:first-child {
@@ -225,7 +225,7 @@
   height: 215px;
   object-fit: contain;
   border-radius: 12px;
-  border: 1px solid #e4ebf5;
+  border: 1px solid #dbe7f7;
   background: #ffffff;
   padding: 10px;
 }

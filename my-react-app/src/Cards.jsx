@@ -4,6 +4,8 @@ import Productos from './Productos';
 import Contacto from './Contacto';
 import Sucursales from './Sucursales';
 import Galeria from './Galeria';
+import Usuarios from './usuarios';
+import Carrito from './carrito';
 
 import PropTypes from 'prop-types';
 
@@ -12,6 +14,8 @@ function Cards({vista}) {
     "Inicio": <Inicio/>,
     "AcercaDe": <AcercaDe/>,
     "Productos": <Productos/>,
+    "Carrito": <Carrito/>,
+    "Usuarios": <Usuarios/>,
     "Contacto": <Contacto/>,
     "Sucursales": <Sucursales/>,
     "Galeria": <Galeria/>,

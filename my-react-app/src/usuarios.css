@@ -1,0 +1,93 @@
+.usuariosDiv {
+  padding: 56px 24px;
+  margin: 0 auto;
+  max-width: 1320px;
+  border: 1px solid #d9e6f8;
+  border-radius: 20px;
+  background:
+    radial-gradient(860px 300px at 8% -8%, rgba(56, 189, 248, 0.16), transparent 60%),
+    radial-gradient(920px 360px at 100% -12%, rgba(37, 99, 235, 0.12), transparent 60%),
+    linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%);
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.1);
+}
+
+.usuariosDiv h1 {
+  margin: 0 0 18px;
+  color: #162030;
+  font-size: clamp(28px, 2.8vw, 38px);
+}
+
+.tablaWrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid #d9e6f8;
+  background: #ffffff;
+}
+
+.usuariosTabla {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+}
+
+.usuariosTabla thead {
+  background: linear-gradient(180deg, #eaf2ff 0%, #dbeafe 100%);
+}
+
+.usuariosTabla th,
+.usuariosTabla td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e3ecfa;
+  text-align: left;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.usuariosTabla th {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.usuariosTabla tbody tr:hover {
+  background: #f6faff;
+}
+
+.btnTabla {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btnTabla.editar {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btnTabla.eliminar {
+  background: #ffffff;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+
+.btnTabla:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(37, 99, 235, 0.18);
+}
+
+@media (max-width: 900px) {
+  .usuariosDiv {
+    padding: 30px 12px;
+    border-radius: 14px;
+  }
+
+  .usuariosTabla th,
+  .usuariosTabla td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+}

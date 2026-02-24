@@ -1,21 +1,27 @@
 .divClima {
   min-width: 220px;
   margin-left: 12px;
-  padding: 10px 14px;
+  padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid #1e293b;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: #e2e8f0;
-  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.35);
+  border: 1px solid #dbe7f7;
+  background:
+    radial-gradient(140px 70px at 100% 0%, rgba(56, 189, 248, 0.2), transparent 65%),
+    linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+  color: #0f172a;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.14);
   font-size: 13px;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 .divClima p {
   margin: 0;
 }
+.divClima p:first-child {
+  color: #1e3a8a;
+  font-weight: 600;
+}
 .divClima p + p {
   margin-top: 6px;
-  color: #cbd5e1;
+  color: #475569;
   text-transform: capitalize;
 }
 @media (max-width: 1024px) {
