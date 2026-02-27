@@ -5,6 +5,28 @@ import './carrito.css';
 function Carrito() {
   const [carritos, setCarritos] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const eliminarProducto = (carritoId, productoId, indexProducto) => {
+    setCarritos((prevCarritos) =>
+      prevCarritos.map((carrito) => {
+        if (carrito.id !== carritoId) {
+          return carrito;
+        }
+
+        return {
+          ...carrito,
+          products: Array.isArray(carrito.products)
+            ? carrito.products.filter(
+                (_, index) =>
+                  !(
+                    index === indexProducto &&
+                    carrito.products[index].productId === productoId
+                  )
+              )
+            : [],
+        };
+      })
+    );
+  };
 
   useEffect(() => {
     const obtenerCarritos = async () => {
@@ -40,6 +62,15 @@ function Carrito() {
                 carrito.products.map((producto, index) => (
                   <li key={`${carrito.id}-${producto.productId}-${index}`}>
                     Productos #{producto.productId} - Cantidad: {producto.quantity}
+                    <button
+                      type="button"
+                      className="btnEliminarProducto"
+                      onClick={() =>
+                        eliminarProducto(carrito.id, producto.productId, index)
+                      }
+                    >
+                      Eliminar
+                    </button>
                   </li>
                 ))}
             </ul>

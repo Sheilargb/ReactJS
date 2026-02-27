@@ -64,6 +64,27 @@
 .carritoCard li {
   margin-bottom: 6px;
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btnEliminarProducto {
+  border: 1px solid #93c5fd;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btnEliminarProducto:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(37, 99, 235, 0.18);
 }
 
 .carritoCard button {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from './Services/api.js';
+import RegistrarUsuarios from './RegistrarUsuarios.jsx';
 import './usuarios.css';
 
 function Usuarios() {
@@ -28,6 +29,7 @@ function Usuarios() {
   return (
     <div className="usuariosDiv">
       <h1>Lista de Usuarios</h1>
+      <RegistrarUsuarios />
 
       <div className="tablaWrapper">
         <table className="usuariosTabla">
