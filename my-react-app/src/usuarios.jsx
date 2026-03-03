@@ -7,18 +7,18 @@ function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  useEffect(() => {
-    const obtenerUsuarios = async () => {
-      try {
-        const response = await api.get('/users');
-        setUsuarios(Array.isArray(response.data) ? response.data : []);
-      } catch (error) {
-        console.error('Error al obtener los usuarios:', error);
-      } finally {
-        setCargando(false);
-      }
-    };
+  const obtenerUsuarios = async () => {
+    try {
+      const response = await api.get('/users');
+      setUsuarios(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error('Error al obtener los usuarios:', error);
+    } finally {
+      setCargando(false);
+    }
+  };
 
+  useEffect(() => {
     obtenerUsuarios();
   }, []);
 
@@ -29,7 +29,7 @@ function Usuarios() {
   return (
     <div className="usuariosDiv">
       <h1>Lista de Usuarios</h1>
-      <RegistrarUsuarios />
+      <RegistrarUsuarios onActualizacionExitosa={obtenerUsuarios} />
 
       <div className="tablaWrapper">
         <table className="usuariosTabla">

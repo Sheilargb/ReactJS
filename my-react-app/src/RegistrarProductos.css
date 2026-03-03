@@ -1,0 +1,53 @@
+.registroProductoForm {
+  grid-column: 1 / -1;
+  margin: 0 auto 8px;
+  width: 100%;
+  max-width: 560px;
+  padding: 18px;
+  border: 1px solid #d9e6f8;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+}
+
+.registroProductoForm h2 {
+  margin: 0 0 12px;
+  text-align: center;
+  color: #1d4ed8;
+  font-size: 22px;
+}
+
+.registroProductoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.registroProductoGrid input {
+  width: 100%;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.btnRegistroProducto {
+  display: block;
+  margin: 0 auto;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background: #1d4ed8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btnRegistroProducto:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(37, 99, 235, 0.18);
+}

@@ -1,34 +1,44 @@
 import { useState } from 'react';
+import api from './Services/api.js';
+import './RegistrarProductos.css';
 
-function RegistrarProductos() {
-  const [productos, setProductos] = useState({
-    nombre: '',
-    precio: '',
-    decripcion: '',
-    categoria: '',
-    imagen: '',
-  });
-  
-  const handChange = (e) => {
-    setProductos({...productos, 
-      [e.target.name]: e.target.value
-    });
-}
-  const handleSubmit = (e) => {
-   /* nombre: '',
-    precio: '',
-    decripcion: '',
-    categoria: '',
-    imagen: '',
-  });
+const initialState = {
+  title: '',
+  price: '',
+  description: '',
+  category: '',
+  image: '',
+};
+
+function RegistrarProductos({ onActualizacionExitosa }) {
+  const [nuevoProducto, setNuevoProducto] = useState(initialState);
 
   const manejarCambioProducto = (event) => {
     const { name, value } = event.target;
-    setProductos((prev) => ({ ...prev, [name]: value }));
+    setNuevoProducto((prev) => ({ ...prev, [name]: value }));
   };
 
-  const registrarProducto = (event) => {
+  const registrarProducto = async (event) => {
     event.preventDefault();
+
+    const payload = {
+      ...nuevoProducto,
+      price: Number(nuevoProducto.price),
+    };
+
+    try {
+      const respuesta = await api.post('/products', payload);
+      console.log('Producto registrado:', respuesta.data);
+      alert('Producto registrado con exito');
+      setNuevoProducto(initialState);
+
+      if (onActualizacionExitosa) {
+        onActualizacionExitosa();
+      }
+    } catch (error) {
+      console.error('Error al registrar producto:', error);
+      alert('Error al registrar producto');
+    }
   };
 
   return (
@@ -37,24 +47,45 @@ function RegistrarProductos() {
       <div className="registroProductoGrid">
         <input
           type="text"
-          name="nombre"
+          name="title"
           placeholder="Nombre del producto"
-          value={nuevoProducto.nombre}
+          value={nuevoProducto.title}
           onChange={manejarCambioProducto}
+          required
         />
         <input
           type="number"
-          name="precio"
+          step="0.01"
+          min="0"
+          name="price"
           placeholder="Precio"
-          value={nuevoProducto.precio}
+          value={nuevoProducto.price}
           onChange={manejarCambioProducto}
+          required
         />
         <input
           type="text"
-          name="imagen"
-          placeholder="URL de la imagen"
-          value={nuevoProducto.imagen}
+          name="category"
+          placeholder="Categoria"
+          value={nuevoProducto.category}
           onChange={manejarCambioProducto}
+          required
+        />
+        <input
+          type="text"
+          name="description"
+          placeholder="Descripcion"
+          value={nuevoProducto.description}
+          onChange={manejarCambioProducto}
+          required
+        />
+        <input
+          type="url"
+          name="image"
+          placeholder="URL de la imagen"
+          value={nuevoProducto.image}
+          onChange={manejarCambioProducto}
+          required
         />
       </div>
       <button type="submit" className="btnRegistroProducto">
@@ -62,8 +93,6 @@ function RegistrarProductos() {
       </button>
     </form>
   );
-  */
 }
 
-}
 export default RegistrarProductos;
