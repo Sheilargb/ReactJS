@@ -6,6 +6,7 @@ import './usuarios.css';
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [usuarioEditado, setUsuarioEditado] = useState(null);
 
   const obtenerUsuarios = async () => {
     try {
@@ -22,6 +23,10 @@ function Usuarios() {
     obtenerUsuarios();
   }, []);
 
+  const handleEditarUsuario = (usuario) => {
+    setUsuarioEditado(usuario);
+  };
+
   if (cargando) {
     return <p>Cargando usuarios...</p>;
   }
@@ -29,7 +34,11 @@ function Usuarios() {
   return (
     <div className="usuariosDiv">
       <h1>Lista de Usuarios</h1>
-      <RegistrarUsuarios onActualizacionExitosa={obtenerUsuarios} />
+      <RegistrarUsuarios
+        usuarioEditado={usuarioEditado}
+        limpiarSeleccion={() => setUsuarioEditado(null)}
+        onActualizacionExitosa={obtenerUsuarios}
+      />
 
       <div className="tablaWrapper">
         <table className="usuariosTabla">
@@ -61,7 +70,11 @@ function Usuarios() {
                 <td>{usuario.username || '-'}</td>
                 <td>{usuario.password || '-'}</td>
                 <td>
-                  <button type="button" className="btnTabla editar">
+                  <button
+                    type="button"
+                    className="btnTabla editar"
+                    onClick={() => handleEditarUsuario(usuario)}
+                  >
                     Editar
                   </button>
                 </td>

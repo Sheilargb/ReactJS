@@ -6,6 +6,7 @@ import './Productos.css';
 function Productos() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [productoEnEdicion, setProductoEnEdicion] = useState(null);
 
   const obtenerProductos = async () => {
     try {
@@ -50,6 +51,10 @@ function Productos() {
     }
   };
 
+  const handleEditarProducto = (producto) => {
+    setProductoEnEdicion(producto);
+  };
+
   if (cargando) {
     return <p>Cargando productos...</p>;
   }
@@ -57,7 +62,11 @@ function Productos() {
   return (
     <div className="productosDiv">
       <h1>Nuestros Productos</h1>
-      <RegistrarProductos onActualizacionExitosa={obtenerProductos} />
+      <RegistrarProductos
+        onActualizacionExitosa={obtenerProductos}
+        productoEnEdicion={productoEnEdicion}
+        onCancelarEdicion={() => setProductoEnEdicion(null)}
+      />
       {productos.map((producto) => (
         <div key={producto.id} className="productoItem">
           <p>{producto.title}</p>
@@ -70,6 +79,13 @@ function Productos() {
               onClick={() => manejarAgregar(producto)}
             >
               Agregar
+            </button>
+            <button
+              type="button"
+              className="btnProducto editar"
+              onClick={() => handleEditarProducto(producto)}
+            >
+              Editar
             </button>
             <button
               type="button"

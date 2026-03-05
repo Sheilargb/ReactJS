@@ -10,10 +10,12 @@ function App() {
   const [vista, setVista] = useState("Inicio");
   const esInicio = vista === "Inicio";
   return (
-    <div>
-        <Encabezado cambiarVista={setVista}/>
+    <div className="app">
+      <Encabezado cambiarVista={setVista}/>
+      <main className="content">
         <Cards  vista = {vista}/>
         {esInicio && <Parallax />}
+      </main>
       <Footer />
     </div>
   );

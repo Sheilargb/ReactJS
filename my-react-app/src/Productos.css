@@ -288,6 +288,7 @@
   margin-top: auto;
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .btnProducto {
@@ -310,6 +311,12 @@
   border: 1px solid #93c5fd;
   background: #ffffff;
   color: #1d4ed8;
+}
+
+.btnProducto.editar {
+  border: 1px solid #93c5fd;
+  background: #e0f2fe;
+  color: #0c4a6e;
 }
 
 .btnProducto:hover {

@@ -6,6 +6,7 @@ import Sucursales from './Sucursales';
 import Galeria from './Galeria';
 import Usuarios from './usuarios';
 import Carrito from './carrito';
+import Login from './login';
 
 import PropTypes from 'prop-types';
 
@@ -19,6 +20,7 @@ function Cards({vista}) {
     "Contacto": <Contacto/>,
     "Sucursales": <Sucursales/>,
     "Galeria": <Galeria/>,
+    "Iniciar Sesion": <Login/>,
   }
   return (
     <div className='contenedorDiv'>
