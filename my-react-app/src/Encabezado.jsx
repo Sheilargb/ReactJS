@@ -6,6 +6,7 @@ import WhatsApp from "./assets/whatsapp.png";
 import "./encabezado.css";
 import PropTypes from 'prop-types';
 import Clima from "./clima";
+import { use } from "react";
 
 function Encabezado({cambiarVista}) {
  return (
@@ -28,19 +29,26 @@ function Logo(){
 }
 
 function Menu({cambiarVista}) {
+    const {isLoggedIn, logout} = useAuth();
     return (
         <nav className="menuDiv">
     
             <ul>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Inicio"); }}>Inicio</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("AcercaDe"); }}>Acerca de</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Usuarios"); }}>Usuarios</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Productos"); }}>Productos</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Carrito"); }}>Carrito</a></li>
+                {isLoggedIn ? (
+                    <>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Usuarios"); }}>Usuarios</a></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Carrito"); }}>Carrito</a></li>
+                    </>):
+                    (
+                        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Iniciar Sesion"); }}>Iniciar Sesion</a></li>
+                    )}
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Galeria"); }}>Galeria</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Sucursales"); }}>Sucursales</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Contacto"); }}>Contacto</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Iniciar Sesion"); }}>Iniciar Sesion</a></li>
+                <li>Cerrar Sesion</li>
             </ul>
         </nav>
     );

@@ -5,13 +5,16 @@ import Footer from "./Footer";
 import { useState } from "react";
 
 import "./index.css";
+import { AuthProvider } from "./AuthContext";
 
 function App() {
   const [vista, setVista] = useState("Inicio");
   const esInicio = vista === "Inicio";
   return (
     <div className="app">
-      <Encabezado cambiarVista={setVista}/>
+      <AuthProvider>
+        <Encabezado cambiarVista={setVista}/>
+      </AuthProvider>
       <main className="content">
         <Cards  vista = {vista}/>
         {esInicio && <Parallax />}
