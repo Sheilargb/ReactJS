@@ -2,33 +2,41 @@ import { useState } from 'react';
 import fotoPerfil from './assets/perfil.png';
 import api from './Services/api.js';
 import './login.css';
+import {useAuth} from './AuthContext.jsx';
 
 function Login() {
-  const [datosLogin, setDatosLogin] = useState({
-    usuario: '',
-    contraseña: '',
-  });
+  const {login} = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setDatosLogin((prev) => ({ ...prev, [name]: value }));
+    if (name === 'username') {
+      setUsername(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const payload = {
-      username: datosLogin.usuario,
-      password: datosLogin.contraseña,
+      username,
+      password,
     };
 
     try {
       const respuesta = await api.post('/auth/login', payload);
-      console.log('token:', respuesta.data?.token);
+      const token = respuesta.data?.token;
+      if (token) {
+        login(token);
+      }
+      console.log('token:', token);
       alert('Inicio de sesion exitoso');
     } catch (error) {
       console.error('Error en inicio de sesion:', error);
-      alert('Usuario o contraseña incorrectos');
+      alert('Usuario o contrasena incorrectos');
     }
   };
 
@@ -40,24 +48,24 @@ function Login() {
         </div>
         <h2>Iniciar sesion</h2>
 
-        <label htmlFor="usuario">Usuario</label>
+        <label htmlFor="username">Usuario</label>
         <input
-          id="usuario"
+          id="username"
           type="text"
-          name="usuario"
+          name="username"
           placeholder="Ingresa tu usuario"
-          value={datosLogin.usuario}
+          value={username}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="contraseña">Contraseña</label>
+        <label htmlFor="password">Contrasena</label>
         <input
-          id="contraseña"
+          id="password"
           type="password"
-          name="contraseña"
-          placeholder="Ingresa tu contraseña"
-          value={datosLogin.contraseña}
+          name="password"
+          placeholder="Ingresa tu contrasena"
+          value={password}
           onChange={handleChange}
           required
         />
@@ -71,7 +79,7 @@ function Login() {
             Crear cuenta
           </a>
           <a href="#" onClick={(event) => event.preventDefault()}>
-            Cambiar contraseña
+            Cambiar contrasena
           </a>
         </div>
       </form>

@@ -11,16 +11,16 @@ function App() {
   const [vista, setVista] = useState("Inicio");
   const esInicio = vista === "Inicio";
   return (
-    <div className="app">
-      <AuthProvider>
+    <AuthProvider>
+      <div className="app">
         <Encabezado cambiarVista={setVista}/>
-      </AuthProvider>
-      <main className="content">
-        <Cards  vista = {vista}/>
-        {esInicio && <Parallax />}
-      </main>
-      <Footer />
-    </div>
+        <main className="content">
+          <Cards  vista = {vista}/>
+          {esInicio && <Parallax />}
+        </main>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 
