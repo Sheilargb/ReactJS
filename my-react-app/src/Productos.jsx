@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import api from './Services/api.js';
 import RegistrarProductos from './RegistrarProductos.jsx';
 import './Productos.css';
+import { useAuth } from './AuthContext.jsx';
 
 function Productos() {
+  const { isLoggedIn } = useAuth();
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
@@ -62,11 +64,13 @@ function Productos() {
   return (
     <div className="productosDiv">
       <h1>Nuestros Productos</h1>
-      <RegistrarProductos
-        onActualizacionExitosa={obtenerProductos}
-        productoEnEdicion={productoEnEdicion}
-        onCancelarEdicion={() => setProductoEnEdicion(null)}
-      />
+      {isLoggedIn && (
+        <RegistrarProductos
+          onActualizacionExitosa={obtenerProductos}
+          productoEnEdicion={productoEnEdicion}
+          onCancelarEdicion={() => setProductoEnEdicion(null)}
+        />
+      )}
       {productos.map((producto) => (
         <div key={producto.id} className="productoItem">
           <p>{producto.title}</p>
@@ -80,20 +84,24 @@ function Productos() {
             >
               Agregar
             </button>
-            <button
-              type="button"
-              className="btnProducto editar"
-              onClick={() => handleEditarProducto(producto)}
-            >
-              Editar
-            </button>
-            <button
-              type="button"
-              className="btnProducto eliminar"
-              onClick={() => manejarEliminar(producto.id)}
-            >
-              Eliminar
-            </button>
+            {isLoggedIn && (
+              <>
+                <button
+                  type="button"
+                  className="btnProducto editar"
+                  onClick={() => handleEditarProducto(producto)}
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  className="btnProducto eliminar"
+                  onClick={() => manejarEliminar(producto.id)}
+                >
+                  Eliminar
+                </button>
+              </>
+            )}
           </div>
         </div>
       ))}

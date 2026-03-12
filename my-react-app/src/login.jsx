@@ -3,8 +3,9 @@ import fotoPerfil from './assets/perfil.png';
 import api from './Services/api.js';
 import './login.css';
 import {useAuth} from './AuthContext.jsx';
+import PropTypes from 'prop-types';
 
-function Login() {
+function Login({ onCrearCuenta }) {
   const {login} = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -59,12 +60,12 @@ function Login() {
           required
         />
 
-        <label htmlFor="password">Contrasena</label>
+        <label htmlFor="password">Contraseña</label>
         <input
           id="password"
           type="password"
           name="password"
-          placeholder="Ingresa tu contrasena"
+          placeholder="Ingresa tu contraseña"
           value={password}
           onChange={handleChange}
           required
@@ -75,16 +76,28 @@ function Login() {
         </button>
 
         <div className="loginAcciones">
-          <a href="#" onClick={(event) => event.preventDefault()}>
+          <a
+            href="#"
+            onClick={(event) => {
+              event.preventDefault();
+              if (onCrearCuenta) {
+                onCrearCuenta();
+              }
+            }}
+          >
             Crear cuenta
           </a>
           <a href="#" onClick={(event) => event.preventDefault()}>
-            Cambiar contrasena
+            Cambiar contraseña
           </a>
         </div>
       </form>
     </div>
   );
 }
+
+Login.propTypes = {
+  onCrearCuenta: PropTypes.func,
+};
 
 export default Login;

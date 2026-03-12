@@ -7,20 +7,25 @@ import Galeria from './Galeria';
 import Usuarios from './usuarios';
 import Carrito from './carrito';
 import Login from './login';
+import Categorias from './Categorias';
+import { useAuth } from './AuthContext.jsx';
 
 import PropTypes from 'prop-types';
 
-function Cards({vista}) {
+function Cards({vista, cambiarVista}) {
+  const { isLoggedIn } = useAuth();
   const vistas = {
     "Inicio": <Inicio/>,
     "AcercaDe": <AcercaDe/>,
     "Productos": <Productos/>,
     "Carrito": <Carrito/>,
     "Usuarios": <Usuarios/>,
+    "Categorias": isLoggedIn ? <Categorias/> : <Inicio/>,
     "Contacto": <Contacto/>,
     "Sucursales": <Sucursales/>,
     "Galeria": <Galeria/>,
-    "Iniciar Sesion": <Login/>,
+    "Iniciar Sesion": <Login onCrearCuenta={() => cambiarVista("Registrar Usuario")} />,
+    "Registrar Usuario": <Usuarios mostrarFormularioInicial />,
   }
   return (
     <div className='contenedorDiv'>
@@ -42,13 +47,13 @@ function Inicio() {
       <TarjetaComponent
         titulo="Java"
         descripcion="Lenguaje orientado a objetos muy popular."
-         imagen="https://cloudmatetechnologies.com/wp-content/uploads/2024/06/react.js.png"
+         imagen="https://miro.medium.com/0*gtY-llyEbkeoS1Sp.png"
       />
 
       <TarjetaComponent
         titulo="React JSX"
         descripcion="Sintaxis moderna para interfaces dinámicas."
-         imagen="http://localhost:5173/src/assets/react.jpg"
+         imagen="https://www.mbloging.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fyynr1uml%2Fproduction%2Fd3f0ff2ab5398aaffb00fa0b3afcb238772f42e7-1024x576.jpg%3Fw%3D1024%26auto%3Dformat&w=3840&q=75"
       />
 
       <TarjetaComponent
@@ -72,7 +77,8 @@ function TarjetaComponent(props) {
 }
 
 Cards.propTypes = {
-  vista: PropTypes.string.isRequired
+  vista: PropTypes.string.isRequired,
+  cambiarVista: PropTypes.func.isRequired,
 };
 
 export default Cards;

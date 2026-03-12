@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import api from './Services/api';
 import './usuarios.css';
 
-function RegistrarUsuarios({ usuarioEditado = null, limpiarSeleccion, onActualizacionExitosa }) {
+function RegistrarUsuarios({ usuarioEditado = null, limpiarSeleccion, onActualizacionExitosa, onCancelar }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,7 +54,14 @@ function RegistrarUsuarios({ usuarioEditado = null, limpiarSeleccion, onActualiz
 
   return (
     <div className="registroForm">
-      <h2>{usuarioEditado ? 'Editar Usuario' : 'Registrar Usuario'}</h2>
+      <div className="registroHeader">
+        <h2>{usuarioEditado ? 'Editar Usuario' : 'Registrar Usuario'}</h2>
+        {onCancelar && (
+          <button type="button" className="btnRegistro secundario" onClick={onCancelar}>
+            Volver
+          </button>
+        )}
+      </div>
       <form onSubmit={handleSubmit} className="registroGrid">
         <label>Nombre de Usuario:</label>
         <input

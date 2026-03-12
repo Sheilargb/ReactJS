@@ -15,7 +15,7 @@ function App() {
       <div className="app">
         <Encabezado cambiarVista={setVista}/>
         <main className="content">
-          <Cards  vista = {vista}/>
+          <Cards vista={vista} cambiarVista={setVista} />
           {esInicio && <Parallax />}
         </main>
         <Footer />
