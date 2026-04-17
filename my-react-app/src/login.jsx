@@ -7,13 +7,13 @@ import PropTypes from 'prop-types';
 
 function Login({ onCrearCuenta }) {
   const {login} = useAuth();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === 'username') {
-      setUsername(value);
+    if (name === 'email') {
+      setEmail(value);
     } else if (name === 'password') {
       setPassword(value);
     }
@@ -23,12 +23,12 @@ function Login({ onCrearCuenta }) {
     event.preventDefault();
 
     const payload = {
-      username,
+      email,
       password,
     };
 
     try {
-      const respuesta = await api.post('/auth/login', payload);
+      const respuesta = await api.post('/login', payload);
       const token = respuesta.data?.token;
       if (token) {
         login(token);
@@ -49,13 +49,13 @@ function Login({ onCrearCuenta }) {
         </div>
         <h2>Iniciar sesion</h2>
 
-        <label htmlFor="username">Usuario</label>
+        <label htmlFor="email">Correo electronico</label>
         <input
-          id="username"
-          type="text"
-          name="username"
-          placeholder="Ingresa tu usuario"
-          value={username}
+          id="email"
+          type="email"
+          name="email"
+          placeholder="Ingresa tu correo"
+          value={email}
           onChange={handleChange}
           required
         />
