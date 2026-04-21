@@ -1,46 +1,58 @@
 import { useEffect, useState } from "react";
+import api from "./Services/api.js";
 import { useAuth } from "./AuthContext.jsx";
 import "./Categorias.css";
-
-const API_URL = "https://www.themealdb.com/api/json/v1/1/categories.php";
+import "./RegistrarProductos.css";
 
 function Categorias() {
   const { isLoggedIn } = useAuth();
   const [categorias, setCategorias] = useState([]);
+  const [nombre, setNombre] = useState("");
   const [estado, setEstado] = useState({ loading: true, error: "" });
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      return;
-    }
-
-    let activo = true;
+  const obtenerCategorias = async () => {
     setEstado({ loading: true, error: "" });
 
-    fetch(API_URL)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Respuesta no valida");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (!activo) return;
-        setCategorias(data?.categories ?? []);
-        setEstado({ loading: false, error: "" });
-      })
-      .catch(() => {
-        if (!activo) return;
-        setEstado({
-          loading: false,
-          error: "No se pudo cargar la lista de categorias.",
-        });
+    try {
+      const response = await api.get("/categories");
+      setCategorias(Array.isArray(response.data) ? response.data : []);
+      setEstado({ loading: false, error: "" });
+    } catch {
+      setEstado({
+        loading: false,
+        error: "No se pudo cargar la lista de categorias.",
       });
+    }
+  };
 
-    return () => {
-      activo = false;
-    };
+  useEffect(() => {
+    if (isLoggedIn) {
+      obtenerCategorias();
+    }
   }, [isLoggedIn]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await api.post("/categories", { nombre });
+      setNombre("");
+      obtenerCategorias();
+    } catch (error) {
+      console.error("Error al registrar categoria:", error);
+      alert("No se pudo registrar la categoria");
+    }
+  };
+
+  const handleEliminar = async (id) => {
+    try {
+      await api.delete(`/categories/${id}`);
+      setCategorias((prev) => prev.filter((categoria) => categoria.id !== id));
+    } catch (error) {
+      console.error("Error al eliminar categoria:", error);
+      alert("No se pudo eliminar la categoria");
+    }
+  };
 
   if (!isLoggedIn) {
     return null;
@@ -51,20 +63,34 @@ function Categorias() {
       <div className="categorias-hero">
         <div>
           <span className="categorias-tag">CATEGORIAS</span>
-          <h2>Explora recetas por categoria</h2>
+          <h2>Administra las categorias de la tienda</h2>
           <p className="categorias-lead">
-            Descubre opciones internacionales y encuentra el siguiente platillo
-            para tu menu. Cada categoria incluye una vista previa y su
-            descripcion.
+            Crea categorias reales para tus productos y visualiza el contenido
+            almacenado en la base de datos.
           </p>
         </div>
         <div className="categorias-resumen">
           <p className="categorias-contador">
             {categorias.length} categorias disponibles
           </p>
-          <p className="categorias-fuente">Fuente: TheMealDB</p>
+          <p className="categorias-fuente">Fuente: MySQL</p>
         </div>
       </div>
+
+      <form className="registroProductoForm" onSubmit={handleSubmit}>
+        <div className="registroProductoGrid">
+          <input
+            type="text"
+            placeholder="Nombre de la categoria"
+            value={nombre}
+            onChange={(event) => setNombre(event.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btnRegistroProducto">
+          Registrar categoria
+        </button>
+      </form>
 
       {estado.loading && (
         <div className="categorias-estado">Cargando categorias...</div>
@@ -75,17 +101,17 @@ function Categorias() {
 
       <div className="categorias-grid">
         {categorias.map((categoria) => (
-          <article className="categoria-card" key={categoria.idCategory}>
-            <div className="categoria-media">
-              <img
-                src={categoria.strCategoryThumb}
-                alt={categoria.strCategory}
-                loading="lazy"
-              />
-            </div>
+          <article className="categoria-card" key={categoria.id}>
             <div className="categoria-body">
-              <h3>{categoria.strCategory}</h3>
-              <p>{categoria.strCategoryDescription}</p>
+              <h3>{categoria.nombre}</h3>
+              <p>Categoria registrada con id #{categoria.id}</p>
+              <button
+                type="button"
+                className="btnTabla eliminar"
+                onClick={() => handleEliminar(categoria.id)}
+              >
+                Eliminar
+              </button>
             </div>
           </article>
         ))}

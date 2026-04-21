@@ -5,73 +5,75 @@ import TikTok from "./assets/tik-tok.png";
 import WhatsApp from "./assets/whatsapp.png";
 import "./encabezado.css";
 import PropTypes from 'prop-types';
-import Clima from "./clima";
 import { useAuth } from "./AuthContext.jsx";
 
-function Encabezado({cambiarVista}) {
- return (
-        <div className="Encabezado">
-            <Logo/>
-            <Menu cambiarVista={cambiarVista}/>
-            <Redes/>
-        </div>
-
-    );
+function Encabezado({ cambiarVista }) {
+  return (
+    <div className="Encabezado">
+      <Logo />
+      <Menu cambiarVista={cambiarVista} />
+      <Redes />
+    </div>
+  );
 }
 
-
-function Logo(){
-    return (
-        <div className="logoDiv">
-            <img src={miLogo} alt="React Logo" />
-        </div>
-    )
+function Logo() {
+  return (
+    <div className="logoDiv">
+      <img src={miLogo} alt="React Logo" />
+    </div>
+  );
 }
 
-function Menu({cambiarVista}) {
-    const {isLoggedIn, logout} = useAuth();
-    const handleLogout = () => {
-        logout();                     //Esta función se encarga de cerrar la sesión del usuario. Llama a la función logout proporcionada por el contexto de autenticación para eliminar el token de autenticación y actualizar el estado de inicio de sesión. Después de cerrar la sesión, redirige al usuario a la vista de inicio.
-        cambiarVista("Inicio");
-    }
-    return (
-        <nav className="menuDiv">
-    
-            <ul>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Inicio"); }}>Inicio</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("AcercaDe"); }}>Acerca de</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Productos"); }}>Productos</a></li>
-                {isLoggedIn && (
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Categorias"); }}>Categorias</a></li>
-                )}
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Galeria"); }}>Galeria</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Sucursales"); }}>Sucursales</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Contacto"); }}>Contacto</a></li>
-                {isLoggedIn ? (
-                    <>
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Usuarios"); }}>Usuarios</a></li>
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Carrito"); }}>Carrito</a></li>
-                    <li onClick={handleLogout}>Cerrar Sesion</li>
-                    </>):(
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Iniciar Sesion"); }}>Iniciar Sesion</a></li>
-                    )}
-            </ul>
-        </nav>
-    );
+function Menu({ cambiarVista }) {
+  const { isLoggedIn, isAdmin, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    cambiarVista("Inicio");
+  };
+
+  return (
+    <nav className="menuDiv">
+      <ul>
+        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Inicio"); }}>Inicio</a></li>
+        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("AcercaDe"); }}>Acerca de</a></li>
+        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Productos"); }}>Productos</a></li>
+        {isLoggedIn && isAdmin && (
+          <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Categorias"); }}>Categorias</a></li>
+        )}
+        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Galeria"); }}>Galeria</a></li>
+        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Sucursales"); }}>Sucursales</a></li>
+        <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Contacto"); }}>Contacto</a></li>
+        {isLoggedIn ? (
+          <>
+            {isAdmin && (
+              <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Usuarios"); }}>Usuarios</a></li>
+            )}
+            {isAdmin && (
+              <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Carrito"); }}>Carrito</a></li>
+            )}
+            <li onClick={handleLogout}>Cerrar Sesion</li>
+          </>
+        ) : (
+          <li><a href="#" onClick={(e) => { e.preventDefault(); cambiarVista("Iniciar Sesion"); }}>Iniciar Sesion</a></li>
+        )}
+      </ul>
+    </nav>
+  );
 }
 
 function Redes() {
-    return (
-        <div className="redesDiv">
-            <ul>
-                    <li><a href='#'><img src={Facebook} alt="Facebook"  /></a></li>
-                    <li><a href='#'><img src={Instagram} alt="Instagram"  /></a></li>
-                    <li><a href='#'><img src={TikTok} alt="TikTok" /></a></li>
-                    <li><a href='#'><img src={WhatsApp} alt="WhatsApp" /></a></li>
-            </ul>
-            <Clima/>
-        </div>
-    );
+  return (
+    <div className="redesDiv">
+      <ul>
+        <li><a href="#"><img src={Facebook} alt="Facebook" /></a></li>
+        <li><a href="#"><img src={Instagram} alt="Instagram" /></a></li>
+        <li><a href="#"><img src={TikTok} alt="TikTok" /></a></li>
+        <li><a href="#"><img src={WhatsApp} alt="WhatsApp" /></a></li>
+      </ul>
+    </div>
+  );
 }
 
 Encabezado.propTypes = {
@@ -83,5 +85,3 @@ Menu.propTypes = {
 };
 
 export default Encabezado;
-
-

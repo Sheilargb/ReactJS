@@ -1,25 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { useEffect, useState } from 'react';
 
-const containerStyle = {
-  width: '100%',
-  height: '350px',
-};
+function crearOpenStreetMapUrl(lat, lng) {
+  const offset = 0.02;
+  const left = lng - offset;
+  const right = lng + offset;
+  const top = lat + offset;
+  const bottom = lat - offset;
 
-const libraries = ['marker'];
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}&layer=mapnik&marker=${lat}%2C${lng}`;
+}
+
+function crearOpenStreetMapLink(lat, lng, zoom = 15) {
+  return `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=${zoom}/${lat}/${lng}`;
+}
 
 function MapaGeolocalizacion() {
   const [ubicacion, setUbicacion] = useState(null);
   const [errorUbicacion, setErrorUbicacion] = useState('');
-  const [mapa, setMapa] = useState(null);
-  const marcadorRef = useRef(null);
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.API_KEY;
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: apiKey || '',
-    libraries,
-  });
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -42,66 +39,36 @@ function MapaGeolocalizacion() {
     );
   }, []);
 
-  useEffect(() => {
-    if (!isLoaded || !mapa || !ubicacion || !window.google?.maps?.marker?.AdvancedMarkerElement) {
-      return;
-    }
-
-    if (marcadorRef.current) {
-      marcadorRef.current.map = null;
-    }
-
-    marcadorRef.current = new window.google.maps.marker.AdvancedMarkerElement({
-      map: mapa,
-      position: ubicacion,
-      title: 'Tu ubicacion',
-    });
-
-    return () => {
-      if (marcadorRef.current) {
-        marcadorRef.current.map = null;
-      }
-    };
-  }, [isLoaded, mapa, ubicacion]);
-
-  if (!apiKey) {
-    return (
-      <div style={{ padding: 12, background: '#fff3cd', color: '#856404' }}>
-        Google Maps API key no encontrada. Define <strong>VITE_GOOGLE_MAPS_API_KEY</strong> en tu .env
-      </div>
-    );
-  }
-
-  if (loadError) {
-    return (
-      <div style={{ padding: 12, background: '#fee2e2', color: '#991b1b' }}>
-        Error al cargar Google Maps.
-      </div>
-    );
-  }
-
   return (
     <div className="google-map">
       {errorUbicacion && (
         <p style={{ margin: '0 0 8px', fontSize: 14, color: '#fef08a' }}>{errorUbicacion}</p>
       )}
-      {!isLoaded && <p style={{ margin: 0, fontSize: 14 }}>Cargando mapa...</p>}
-      {isLoaded && ubicacion ? (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={ubicacion}
-          zoom={16}
-          onLoad={(mapInstance) => setMapa(mapInstance)}
-          onUnmount={() => setMapa(null)}
-          options={{ mapId: 'DEMO_MAP_ID' }}
-        />
+      {!ubicacion && <p style={{ margin: 0, fontSize: 14 }}>Obteniendo ubicacion...</p>}
+      {ubicacion ? (
+        <>
+          <iframe
+            title="Mapa de tu ubicacion"
+            src={crearOpenStreetMapUrl(ubicacion.lat, ubicacion.lng)}
+            width="100%"
+            height="350"
+            style={{ border: 0, borderRadius: 12 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <p style={{ marginTop: 8 }}>
+            <a
+              href={crearOpenStreetMapLink(ubicacion.lat, ubicacion.lng)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ver ubicacion ampliada
+            </a>
+          </p>
+        </>
       ) : null}
-      {isLoaded && !ubicacion && (
-        <p style={{ margin: 0, fontSize: 14 }}>Obteniendo ubicacion...</p>
-      )}
     </div>
   );
 }
 
 export default MapaGeolocalizacion;
-

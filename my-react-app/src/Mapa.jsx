@@ -1,73 +1,40 @@
-import { useEffect, useRef, useState } from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+function crearOpenStreetMapUrl(lat, lng, zoom = 15) {
+  const offset = 0.02;
+  const left = lng - offset;
+  const right = lng + offset;
+  const top = lat + offset;
+  const bottom = lat - offset;
 
-const containerStyle = {
-  width: '100%',
-  height: '350px',
-};
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}&layer=mapnik&marker=${lat}%2C${lng}`;
+}
 
-const libraries = ['marker'];
+function crearOpenStreetMapLink(lat, lng, zoom = 15) {
+  return `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=${zoom}/${lat}/${lng}`;
+}
 
 function Mapa({ lat, lng, nombre_sucursal }) {
-  const [mapa, setMapa] = useState(null);
-  const marcadorRef = useRef(null);
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.API_KEY;
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: apiKey || '',
-    libraries,
-  });
-
-  const center = { lat, lng };
-
-  useEffect(() => {
-    if (!isLoaded || !mapa || !window.google?.maps?.marker?.AdvancedMarkerElement) {
-      return;
-    }
-
-    if (marcadorRef.current) {
-      marcadorRef.current.map = null;
-    }
-
-    marcadorRef.current = new window.google.maps.marker.AdvancedMarkerElement({
-      map: mapa,
-      position: center,
-      title: nombre_sucursal,
-    });
-
-    return () => {
-      if (marcadorRef.current) {
-        marcadorRef.current.map = null;
-      }
-    };
-  }, [isLoaded, mapa, center.lat, center.lng, nombre_sucursal]);
-
-  if (!apiKey) {
-    return (
-      <div style={{ padding: 12, background: '#fff3cd', color: '#856404' }}>
-        Google Maps API key no encontrada. Define <strong>VITE_GOOGLE_MAPS_API_KEY</strong> en tu .env
-      </div>
-    );
-  }
-
-  if (loadError) return <div>Error al cargar el mapa</div>;
-  if (!isLoaded) return <div>Cargando mapa...</div>;
+  const mapUrl = crearOpenStreetMapUrl(lat, lng);
+  const mapLink = crearOpenStreetMapLink(lat, lng);
 
   return (
     <div>
       <h2>{nombre_sucursal}</h2>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={16}
-        onLoad={(mapInstance) => setMapa(mapInstance)}
-        onUnmount={() => setMapa(null)}
-        options={{ mapId: 'DEMO_MAP_ID' }}
+      <iframe
+        title={`Mapa de ${nombre_sucursal}`}
+        src={mapUrl}
+        width="100%"
+        height="350"
+        style={{ border: 0, borderRadius: 12 }}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
       />
+      <p style={{ marginTop: 8 }}>
+        <a href={mapLink} target="_blank" rel="noreferrer">
+          Ver mapa ampliado
+        </a>
+      </p>
     </div>
   );
 }
 
 export default Mapa;
-

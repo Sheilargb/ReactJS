@@ -3,7 +3,11 @@ import api from './Services/api.js';
 import RegistrarUsuarios from './RegistrarUsuarios.jsx';
 import './usuarios.css';
 
-function Usuarios({ mostrarFormularioInicial = false }) {
+function Usuarios({
+  mostrarFormularioInicial = false,
+  modoRegistroPublico = false,
+  onRegistroCompleto,
+}) {
   const [usuarios, setUsuarios] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [usuarioEditado, setUsuarioEditado] = useState(null);
@@ -21,8 +25,13 @@ function Usuarios({ mostrarFormularioInicial = false }) {
   };
 
   useEffect(() => {
+    if (modoRegistroPublico) {
+      setCargando(false);
+      return;
+    }
+
     obtenerUsuarios();
-  }, []);
+  }, [modoRegistroPublico]);
 
   useEffect(() => {
     if (mostrarFormularioInicial) {
@@ -35,8 +44,28 @@ function Usuarios({ mostrarFormularioInicial = false }) {
     setMostrarFormulario(true);
   };
 
+  const handleEliminarUsuario = async (id) => {
+    try {
+      await api.delete(`/users/${id}`);
+      setUsuarios((prev) => prev.filter((usuario) => usuario.id !== id));
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error);
+      alert('No se pudo eliminar el usuario');
+    }
+  };
+
   if (cargando) {
     return <p>Cargando usuarios...</p>;
+  }
+
+  if (modoRegistroPublico) {
+    return (
+      <RegistrarUsuarios
+        onCancelar={onRegistroCompleto}
+        modoRegistroPublico
+        onRegistroCompleto={onRegistroCompleto}
+      />
+    );
   }
 
   return (
@@ -63,12 +92,10 @@ function Usuarios({ mostrarFormularioInicial = false }) {
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Apellidos</th>
                   <th>Direccion</th>
                   <th>Telefono</th>
                   <th>Correo</th>
-                  <th>Username</th>
-                  <th>Password</th>
+                  <th>Rol</th>
                   <th>Editar</th>
                   <th>Eliminar</th>
                 </tr>
@@ -76,17 +103,11 @@ function Usuarios({ mostrarFormularioInicial = false }) {
               <tbody>
                 {usuarios.map((usuario) => (
                   <tr key={usuario.id}>
-                    <td>{usuario.name?.firstname || '-'}</td>
-                    <td>{usuario.name?.lastname || '-'}</td>
-                    <td>
-                      {usuario.address
-                        ? `${usuario.address.street || ''} ${usuario.address.number || ''}, ${usuario.address.city || ''}`.trim()
-                        : '-'}
-                    </td>
-                    <td>{usuario.phone || '-'}</td>
+                    <td>{usuario.nombre || '-'}</td>
+                    <td>{usuario.direccion || '-'}</td>
+                    <td>{usuario.telefono || '-'}</td>
                     <td>{usuario.email || '-'}</td>
-                    <td>{usuario.username || '-'}</td>
-                    <td>{usuario.password || '-'}</td>
+                    <td>{usuario.rol || '-'}</td>
                     <td>
                       <button
                         type="button"
@@ -97,7 +118,11 @@ function Usuarios({ mostrarFormularioInicial = false }) {
                       </button>
                     </td>
                     <td>
-                      <button type="button" className="btnTabla eliminar">
+                      <button
+                        type="button"
+                        className="btnTabla eliminar"
+                        onClick={() => handleEliminarUsuario(usuario.id)}
+                      >
                         Eliminar
                       </button>
                     </td>
@@ -121,6 +146,7 @@ function Usuarios({ mostrarFormularioInicial = false }) {
             setUsuarioEditado(null);
             setMostrarFormulario(false);
           }}
+          modoRegistroPublico={false}
         />
       )}
     </div>

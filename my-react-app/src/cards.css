@@ -1,3 +1,7 @@
+.contenedorDiv {
+  width: 100%;
+}
+
 .cardsContainer {
   display: flex;
   gap: 30px;

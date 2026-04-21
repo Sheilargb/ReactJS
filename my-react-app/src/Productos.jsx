@@ -5,7 +5,7 @@ import './Productos.css';
 import { useAuth } from './AuthContext.jsx';
 
 function Productos() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
@@ -26,20 +26,63 @@ function Productos() {
   }, []);
 
   const manejarAgregar = async (producto) => {
-    const payload = {
-      title: producto.title,
-      price: producto.price,
-      description: producto.description || 'Sin descripcion',
-      category: producto.category || 'general',
-      image: producto.image || '',
-    };
+    if (!user?.id) {
+      alert('Necesitas iniciar sesion para agregar al carrito');
+      return;
+    }
 
     try {
-      const respuesta = await api.post('/products', payload);
-      console.log('Producto agregado desde tarjeta:', respuesta.data);
-      obtenerProductos();
+      const cartsResponse = await api.get('/carts');
+      const carritos = Array.isArray(cartsResponse.data) ? cartsResponse.data : [];
+      const carritoPendiente = carritos.find(
+        (item) => Number(item.userId) === Number(user.id) && item.estado === 'pendiente'
+      );
+
+      if (carritoPendiente) {
+        const products = Array.isArray(carritoPendiente.products)
+          ? [...carritoPendiente.products]
+          : [];
+        const existingProduct = products.find(
+          (item) => Number(item.productId) === Number(producto.id)
+        );
+
+        if (existingProduct) {
+          existingProduct.quantity += 1;
+        } else {
+          products.push({
+            productId: producto.id,
+            quantity: 1,
+            price: Number(producto.price),
+          });
+        }
+
+        await api.put(`/carts/${carritoPendiente.id}`, {
+          userId: user.id,
+          total: products.reduce((acc, item) => acc + item.quantity * Number(item.price), 0),
+          estado: 'pendiente',
+          date: carritoPendiente.date,
+          products,
+        });
+      } else {
+        await api.post('/carts', {
+          userId: user.id,
+          total: Number(producto.price),
+          estado: 'pendiente',
+          date: new Date().toISOString(),
+          products: [
+            {
+              productId: producto.id,
+              quantity: 1,
+              price: Number(producto.price),
+            },
+          ],
+        });
+      }
+
+      alert('Producto agregado al carrito');
     } catch (error) {
-      console.error('Error al agregar producto desde tarjeta:', error);
+      console.error('Error al agregar producto al carrito:', error);
+      alert('No se pudo agregar el producto al carrito');
     }
   };
 
@@ -75,6 +118,8 @@ function Productos() {
         <div key={producto.id} className="productoItem">
           <p>{producto.title}</p>
           <p>${producto.price}</p>
+          <p>{producto.category || 'Sin categoria'}</p>
+          <p>Stock: {producto.stock}</p>
           <img src={producto.image} alt={producto.title} />
           <div className="accionesProducto">
             <button

@@ -5,7 +5,7 @@ import './login.css';
 import {useAuth} from './AuthContext.jsx';
 import PropTypes from 'prop-types';
 
-function Login({ onCrearCuenta }) {
+function Login({ onCrearCuenta, onLoginExitoso }) {
   const {login} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,11 +30,15 @@ function Login({ onCrearCuenta }) {
     try {
       const respuesta = await api.post('/login', payload);
       const token = respuesta.data?.token;
+      const usuario = respuesta.data?.usuario;
       if (token) {
-        login(token);
+        login(token, usuario);
       }
       console.log('token:', token);
       alert('Inicio de sesion exitoso');
+      if (onLoginExitoso) {
+        onLoginExitoso();
+      }
     } catch (error) {
       console.error('Error en inicio de sesion:', error);
       alert('Usuario o contrasena incorrectos');
@@ -98,6 +102,7 @@ function Login({ onCrearCuenta }) {
 
 Login.propTypes = {
   onCrearCuenta: PropTypes.func,
+  onLoginExitoso: PropTypes.func,
 };
 
 export default Login;

@@ -1,34 +1,65 @@
+import { createContext, useContext, useState } from "react";
 
-import { createContext, useState, useContext } from "react";
-const AuthContext = createContext(); 
+const AuthContext = createContext();
+
+function obtenerUsuarioInicial() {
+  const storedUser = localStorage.getItem("user");
+
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser);
+  } catch {
+    return null;
+  }
+}
+
 export const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [user, setUser] = useState(obtenerUsuarioInicial);
+  const isAdmin = user?.rol === "admin";
 
-    const login = (token) => {
-        localStorage.setItem('token', token);
-        setIsLoggedIn(true);
-    };
-    const logout = () => {
-        localStorage.removeItem('token'); 
-        setIsLoggedIn(false);
-    };
-    return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  const login = (newToken, usuario) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
 
-};
-export const useAuth = () =>{
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth debe ser usado dentro de un AuthProvider");
-       
+    if (usuario) {
+      localStorage.setItem("user", JSON.stringify(usuario));
+      setUser(usuario);
     }
-    return context;
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setToken("");
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        token,
+        user,
+        isLoggedIn: Boolean(token),
+        isAdmin,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
-/*Para saber si esta logeado
-Para almacenar el token de autenticación
-Para eliminar el token de autenticación */
-/*Queremos que vaya verificando variables o algo asi 
-Vamos a controlar el estado de si si esta logeado o no lo esta, vamos a controlar ese evento a traves de este archivo*/
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth debe ser usado dentro de un AuthProvider");
+  }
+
+  return context;
+};

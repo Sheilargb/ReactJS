@@ -8,6 +8,7 @@ const initialState = {
   description: '',
   category: '',
   image: '',
+  stock: '',
 };
 
 function RegistrarProductos({
@@ -26,6 +27,7 @@ function RegistrarProductos({
         description: productoEnEdicion.description || '',
         category: productoEnEdicion.category || '',
         image: productoEnEdicion.image || '',
+        stock: productoEnEdicion.stock ?? '',
       });
       return;
     }
@@ -44,6 +46,7 @@ function RegistrarProductos({
     const payload = {
       ...nuevoProducto,
       price: Number(nuevoProducto.price),
+      stock: Number(nuevoProducto.stock || 0),
     };
 
     try {
@@ -114,6 +117,15 @@ function RegistrarProductos({
           name="image"
           placeholder="URL de la imagen"
           value={nuevoProducto.image}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          min="0"
+          name="stock"
+          placeholder="Stock"
+          value={nuevoProducto.stock}
           onChange={handleChange}
           required
         />

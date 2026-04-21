@@ -13,23 +13,46 @@ import { useAuth } from './AuthContext.jsx';
 import PropTypes from 'prop-types';
 
 function Cards({vista, cambiarVista}) {
-  const { isLoggedIn } = useAuth();
-  const vistas = {
-    "Inicio": <Inicio/>,
-    "AcercaDe": <AcercaDe/>,
-    "Productos": <Productos/>,
-    "Carrito": <Carrito/>,
-    "Usuarios": <Usuarios/>,
-    "Categorias": isLoggedIn ? <Categorias/> : <Inicio/>,
-    "Contacto": <Contacto/>,
-    "Sucursales": <Sucursales/>,
-    "Galeria": <Galeria/>,
-    "Iniciar Sesion": <Login onCrearCuenta={() => cambiarVista("Registrar Usuario")} />,
-    "Registrar Usuario": <Usuarios mostrarFormularioInicial />,
-  }
+  const { isLoggedIn, isAdmin } = useAuth();
+
+  const obtenerVista = () => {
+    switch (vista) {
+      case "AcercaDe":
+        return <AcercaDe />;
+      case "Productos":
+        return <Productos />;
+      case "Carrito":
+        return isLoggedIn && isAdmin ? <Carrito /> : <Inicio />;
+      case "Usuarios":
+        return isLoggedIn && isAdmin ? <Usuarios /> : <Inicio />;
+      case "Categorias":
+        return isLoggedIn && isAdmin ? <Categorias /> : <Inicio />;
+      case "Contacto":
+        return <Contacto />;
+      case "Sucursales":
+        return <Sucursales />;
+      case "Galeria":
+        return <Galeria />;
+      case "Iniciar Sesion":
+        return (
+          <Login
+            onCrearCuenta={() => cambiarVista("Registrar Usuario")}
+            onLoginExitoso={() => cambiarVista("Inicio")}
+          />
+        );
+      case "Registrar Usuario":
+        return isLoggedIn && isAdmin
+          ? <Usuarios mostrarFormularioInicial />
+          : <Usuarios modoRegistroPublico onRegistroCompleto={() => cambiarVista("Inicio")} />;
+      case "Inicio":
+      default:
+        return <Inicio />;
+    }
+  };
+
   return (
     <div className='contenedorDiv'>
-      {vistas[vista] || <Inicio/>}
+      {obtenerVista()}
     </div>
   );
 }
